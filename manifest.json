@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "WhatsApp Formalizer",
+  "version": "1.0",
+  "description": "Formaliza mensagens do WhatsApp usando AI",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://web.whatsapp.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+} 

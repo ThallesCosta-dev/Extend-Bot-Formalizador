@@ -1,0 +1,15 @@
+.format-button {
+  position: absolute;
+  right: 70px;
+  bottom: 8px;
+  padding: 5px 10px;
+  border-radius: 15px;
+  border: none;
+  background: #128C7E;
+  color: white;
+  cursor: pointer;
+}
+
+.format-button:hover {
+  background: #075E54;
+} 
