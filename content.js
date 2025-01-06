@@ -38,6 +38,33 @@ style.textContent = `
     opacity: 0.5 !important;
     cursor: not-allowed !important;
   }
+  .formality-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 10000;
+    display: none;
+  }
+  .formality-modal.active {
+    display: block;
+  }
+  .formality-option {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .formality-option:hover {
+    background-color: #f5f5f5;
+  }
 `;
 document.head.appendChild(style);
 
@@ -111,6 +138,13 @@ function createButton() {
     }
   };
   
+  // Adicione o evento de clique direito (contextmenu)
+  button.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    const modal = document.querySelector('.formality-modal') || createFormalityModal();
+    modal.classList.add('active');
+  });
+
   return button;
 }
 
@@ -165,6 +199,7 @@ async function formalizarTexto(texto) {
             - Não acrescente nada além do texto formalizado
             - Mantenha os sinais de pontuação originais (especialmente "?")
             - Preserve a natureza da frase (se é pergunta, afirmação, exclamação)
+            - Se a mensagem não tiver ponto, inclua um ponto final.
             - NÃO adicione NENHUM comentário, descrição ou explicação
             - NÃO use frases como "versão formal:", "aqui está:", etc
             - NÃO adicione títulos ou rótulos
@@ -221,3 +256,28 @@ async function formalizarTexto(texto) {
     throw new Error(`Erro ao formalizar: ${error.message}`);
   }
 } 
+
+// Adicione a função para criar o modal
+function createFormalityModal() {
+  const modal = document.createElement('div');
+  modal.className = 'formality-modal';
+  modal.innerHTML = `
+    <h3>Nível de Formalidade</h3>
+    <button class="formality-option" data-level="light">Leve</button>
+    <button class="formality-option" data-level="medium">Médio</button>
+    <button class="formality-option" data-level="high">Máximo</button>
+  `;
+
+  document.body.appendChild(modal);
+
+  // Adiciona eventos aos botões
+  modal.querySelectorAll('.formality-option').forEach(button => {
+    button.addEventListener('click', () => {
+      config.formalityLevel = button.dataset.level;
+      chrome.storage.sync.set({ formalityLevel: config.formalityLevel });
+      modal.classList.remove('active');
+    });
+  });
+
+  return modal;
+}
