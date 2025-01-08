@@ -22,8 +22,9 @@ Uma extensão para o Chrome que permite formalizar mensagens no WhatsApp Web usa
 
 1. Abra o [WhatsApp Web](https://web.whatsapp.com)
 2. Digite sua mensagem na caixa de texto
-3. Clique no botão de formalização (ícone de formatação) na barra de ferramentas
-4. A mensagem será automaticamente formalizada
+3. Clique duas vezes no texto que deseja formalizar
+4. Clique no botão de formalização (último ícone de formatação a direita) na barra de ferramentas
+5. A mensagem será automaticamente formalizada
 
 ## ⚙️ Configurações
 
